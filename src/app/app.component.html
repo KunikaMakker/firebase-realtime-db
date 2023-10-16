@@ -13,11 +13,11 @@
       <td>Item Name</td>
       <td> Actions</td>
     </thead>
-    <tr class="list-container" *ngFor="let item of todolist; let itr = index">
-      <td>{{itr}}</td>
-      <td>{{item}}</td>
-      <td><button class="edit-btn" (click)='editItem(itr)'>Edit</button>
-      <button (click)='deleteItem(itr)'>Delete</button></td>
+    <tr class="list-container" *ngFor="let item of todolist | keyvalue">
+      <td>{{item.value.id}}</td>
+      <td>{{item.value.name}}</td>
+      <td><button class="edit-btn" (click)='editItem(item.value.id)'>Edit</button>
+      <button (click)='deleteItem(item.value.id)'>Delete</button></td>
     </tr>
   </table>
 </div>
