@@ -2,22 +2,25 @@
   <h1>TODO LIST - FIREBASE CRUD</h1>
   <!-- Add Items Input -->
   <div class="add-container">
-    <div *ngIf="editMode && todolist.length>0" class="editable-item">Change <strong>{{todolist && todolist[editableItem]}}</strong> to </div>
+    <div *ngIf="editMode && todolist.length>0" class="editable-item">Change <strong>{{editableItem.name}}</strong> to </div>
     <input [(ngModel)]="todoItem" type="text" name='todoItem' placeholder="{{editMode ? 'Enter Updatd Value' : 'Enter todo item'}}"/>
     <button *ngIf="!editMode" (click) = 'saveTodoItem()'> Add Item </button>
     <button *ngIf="editMode" (click) = 'updateItem()'> Update Item </button>
   </div>
   <table *ngIf="todolist.length > 0">
     <thead>
-      <td>S.No</td>
+      <td>ID</td>
       <td>Item Name</td>
       <td> Actions</td>
     </thead>
-    <tr class="list-container" *ngFor="let item of todolist; let itr = index">
-      <td>{{itr}}</td>
-      <td>{{item}}</td>
-      <td><button class="edit-btn" (click)='editItem(itr)'>Edit</button>
-      <button (click)='deleteItem(itr)'>Delete</button></td>
+    <tr class="list-container" *ngFor="let item of todolist | keyvalue">
+      <td>{{item.key}}</td>
+      <td>{{item.value.name}}</td>
+      <td>
+        <button *ngIf="!editMode" class="edit-btn" (click)='editItem(item.value.id)'>Edit</button>
+        <button *ngIf="!editMode" (click)='deleteItem(item.value.id)'>Delete</button>
+        <button *ngIf="editMode" (click)='cancelEditMode()'>Cancel Edit</button>
+      </td>
     </tr>
   </table>
 </div>
