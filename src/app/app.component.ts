@@ -10,7 +10,7 @@ import { onChildAdded, onValue, ref, remove, set, update } from 'firebase/databa
 export class AppComponent implements OnInit{
   title = 'firebase-realtime-db';
   todoItem: any = '';
-  todolist: any[] = []
+  todolist: any[] = ['djhdjh']
   editMode: boolean = false;
   editableItem: any;
   dataSaved: boolean = false;
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit{
 
   constructor(public database: Database) {
     //constructor
-    
+
   }
 
   ngOnInit(): void {
@@ -27,34 +27,12 @@ export class AppComponent implements OnInit{
   }
 
   getAllTodoList() {
-    let listRef = ref(this.database, 'todolist/');
-    onValue(listRef, snapshot => {
-      console.log('initial',snapshot.val())
-      this.todolist=[]
-      let value= snapshot.val()
-      if(value){
-        Object.values(value)?.forEach((value: any) => {
-          this.todolist.push({id:value.id,name:value.name});
-        })
-        console.log(this.todolist, 'list')
-      }
-    })
+    //getAll list
   }
 
   saveTodoItem() {
     //save item
-    set(ref(this.database, 'todolist/' + (new Date().getTime())), {
-      id: new Date().getTime(),
-      name: this.todoItem
-    })
-    .then(() => {
-      console.log('Data Saved');
-      this.getTodoList();
-      this.todoItem = ''
-    })
-    .catch(() => {
-      console.log('Data Not Saved');
-    });
+
   }
 
   getTodoList() {
@@ -70,25 +48,10 @@ export class AppComponent implements OnInit{
 
   updateItem() {
     //update item
-    update(ref(this.database, 'todolist/' + this.editableItem?.id), {
-      name: this.todoItem
-    }).then(()=>{
-      console.log('updated value at index ', this.editableItem.id);
-      this.editableItem = {};
-      this.editMode = false;
-      this.todoItem = '';
-      this.getTodoList()
-    });
   }
 
   deleteItem(index: number) {
     //delete item
-    if(index){
-      remove(ref(this.database, 'todolist/' + index)).then(() => {
-        console.log(index,' removed successfully')
-        this.getTodoList()
-      });
-    }
   }
 
   cancelEditMode() {
