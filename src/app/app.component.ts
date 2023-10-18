@@ -10,7 +10,7 @@ import { onChildAdded, onValue, ref, remove, set, update } from 'firebase/databa
 export class AppComponent implements OnInit{
   title = 'firebase-realtime-db';
   todoItem: any = '';
-  todolist: any[] = ['djhdjh']
+  todolist: any[] = ['']
   editMode: boolean = false;
   editableItem: any;
   dataSaved: boolean = false;
